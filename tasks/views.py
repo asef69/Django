@@ -12,7 +12,3 @@ def show_specific_task(request,id):
     print("id ",id)
     print("id type ",type(id))
     return HttpResponse("This is our specific task menu")
-def show_specific_task(request,id):
-    print("id",id)
-    print("id type ",type(id))
-    return HttpResponse("This is our specific task page")
