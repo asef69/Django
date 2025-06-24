@@ -15,25 +15,18 @@ def test(request):
     }
     return render(request,"test.html",context)
 def create_task(request):
-    employees=Employee.objects.all()
-    form=TaskModelForm()
-    if request.method=="POST":
-        form=TaskForm(request.POST,employees=employees)
+    if request.method == "POST":
+        form = TaskModelForm(request.POST)
         if form.is_valid():
-            title = form.cleaned_data.get('title')
-            description = form.cleaned_data.get('description')
-            due_date = form.cleaned_data.get('due_date')
-            assigned_to = form.cleaned_data.get('assigned_to')
-            task=Task.objects.create(
-                title=title,
-                description=description,
-                due_date=due_date,
-            )
-            for id in assigned_to:
-                employee=Employee.objects.get(id=id)
-                task.assigned_to.add(employee)
-            return HttpResponse("Task created successfully!")    
-    context={
-        "form":form
-    }
-    return render(request,"task_form.html",context)
+            form.save()
+            return render(request, "task_form.html", {
+                "form": TaskModelForm(),  # reset form after success
+                "message": "Task created successfully!"
+            })
+        else:
+            # Return the form with errors
+            return render(request, "task_form.html", {"form": form})
+    
+    # This is the important missing return for GET request
+    form = TaskModelForm()
+    return render(request, "task_form.html", {"form": form})
