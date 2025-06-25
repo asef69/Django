@@ -30,3 +30,11 @@ def create_task(request):
     # This is the important missing return for GET request
     form = TaskModelForm()
     return render(request, "task_form.html", {"form": form})
+def view_task(request):
+    #rendering all the data form the tasks model
+    tasks=Task.objects.all()
+    task_3=Task.objects.get(id=3)
+    first_task=Task.objects.first()
+    return render(request, "show_task.html", {"tasks": tasks, "task_3": task_3, "first_task": first_task})
+
+
