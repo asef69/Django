@@ -2,7 +2,7 @@ import os
 import django
 from faker import Faker
 import random
-from tasks.models import Employee, Project, Task, TaskDetails
+from tasks.models import Employee, Project, Task, TaskDetail
 
 # Set up Django environment
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'task_management.settings')
@@ -47,7 +47,7 @@ def populate_db():
 
     # Create Task Details
     for task in tasks:
-        TaskDetails.objects.create(
+        TaskDetail.objects.create(
             task=task,
             assigned_to=", ".join(
                 [emp.name for emp in task.assigned_to.all()]),
