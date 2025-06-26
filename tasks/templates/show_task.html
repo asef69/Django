@@ -8,10 +8,10 @@
 <body>
     <div>
         <ul>
-        {% for task in tasks  %}
+        {% for project in tasks  %}
         <li>
-            <p>{{task.title}}</p>
-            <span>{{task.status}}</span>
+            <p>{{project.name}}</p>
+            <span>{{project.num_tasks}}</span>
         </li>
         {% endfor %}
         </ul>

@@ -1,8 +1,8 @@
-from django.db.models import Q
+from django.db.models import Q,Count,Max,Min,Sum,Avg
 from django.shortcuts import render
 from django.http import HttpResponse
 from tasks.forms import TaskForm,TaskModelForm
-from tasks.models import Employee, Task
+from tasks.models import Employee, Task, Project
 from datetime import date
 from tasks.models import TaskDetails
 # Create your views here.
@@ -41,7 +41,14 @@ def view_task(request):
     #tasks=Task.objects.filter(due_date=date.today())
     #tasks=TaskDetails.objects.exclude(priority='L').select_related('task')
     #tasks=Task.objects.filter(title__icontains="paper")
-    tasks=Task.objects.filter(Q(status='PENDING') | Q(status='IN_PROGRESS'))
-    return render(request, "show_task.html", {"tasks": tasks})
+    #tasks=Task.objects.filter(Q(status='PENDING') | Q(status='IN_PROGRESS'))
+    #tasks=TaskDetails.objects.select_related('task').all()
+    #tasks=Task.objects.select_related('project').all()
+    #tasks= Task.objects.prefetch_related('assigned_to').all()
+    projects=Project.objects.annotate(
+        num_tasks=Count('task'),
+        
+    ).order_by('name')
+    return render(request, "show_task.html", {"tasks": projects})
 
 
