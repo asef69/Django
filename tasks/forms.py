@@ -1,5 +1,5 @@
 from django import forms
-from tasks.models import Task
+from tasks.models import Task,TaskDetails
 
 # Django Form
 
@@ -26,7 +26,7 @@ class StyledFormMixin:
     default_classes = "border-2 border-gray-300 w-full p-3 rounded-lg shadow-sm focus:outline-none focus:border-rose-500 focus:ring-rose-500"
 
     def apply_styled_widgets(self):
-        for field_name, field in self.fields.items():
+        for field_name, field in self.fields.items(): # type: ignore
             if isinstance(field.widget, forms.TextInput):
                 field.widget.attrs.update({
                     'class': self.default_classes,
@@ -72,3 +72,15 @@ class TaskModelForm(StyledFormMixin, forms.ModelForm):
     def __init__(self, *arg, **kwarg):
         super().__init__(*arg, **kwarg)
         self.apply_styled_widgets()
+
+class TaskDetailModelForm(StyledFormMixin,forms.ModelForm):
+    class Meta:
+        model = TaskDetails
+        fields = ['priority', 'notes']
+    def __init__(self, *arg, **kwarg):
+        super().__init__(*arg, **kwarg)
+        self.apply_styled_widgets()
+        self.fields['priority'].widget.attrs.update({
+            'class': 'border-2 border-gray-300 w-full p-3 rounded-lg shadow-sm focus:outline-none focus:border-rose-500 focus:ring-rose-500'
+        })    
+        

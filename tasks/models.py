@@ -23,7 +23,7 @@ class Task(models.Model):
         # ('ON_HOLD','On Hold'),
         # ('CANCELLED','Cancelled'),
     ]
-    project=models.ForeignKey(Project,on_delete=models.CASCADE,default=1)
+    project=models.ForeignKey(Project,on_delete=models.CASCADE,related_name='tasks',null=True,blank=True)
     #notun_string=models.CharField(max_length=100,default="")
     title=models.CharField(max_length=250)
     assigned_to = models.ManyToManyField(Employee, default=1,related_name="tasks")
@@ -46,12 +46,12 @@ class TaskDetails(models.Model):
         (LOW,'Low'),
     )
     #std_id=models.CharField(max_length=200,primary_key=True)
-    task=models.OneToOneField(Task,on_delete=models.CASCADE,related_name='details',)
-    assigned_to = models.CharField(max_length=100)
+    task=models.OneToOneField(Task,on_delete=models.CASCADE,related_name='details')
+    #assigned_to = models.CharField(max_length=100)
     priority=models.CharField(max_length=1,choices=PRIORITY_OPTIONS,default=LOW)
     notes=models.TextField(blank=True,null=True)
 
     def __str__(self):
-        return f"Details for {self.task.title} - Priority: {self.get_priority_display()}"
+        return f"Details for {self.task.title} "
 
 
