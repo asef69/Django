@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In</title>
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.16/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gradient-to-r from-blue-500 to-teal-500 min-h-screen flex items-center justify-center">
+
+    <!-- Card Container -->
+    <div class="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+        <h1 class="text-3xl font-bold text-center text-blue-600 mb-6">Welcome to Authentication System</h1>
+
+        <!-- Authentication Form -->
+        <form method="POST" class="space-y-6">
+            {% csrf_token %}
+
+            <!-- Username Field -->
+            <div class="flex flex-col">
+                <label for="username" class="text-sm font-medium text-gray-700">Username</label>
+                <input type="text" placeholder="Enter your username" name="username" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+
+            <!-- Password Field -->
+            <div class="flex flex-col">
+                <label for="password" class="text-sm font-medium text-gray-700">Password</label>
+                <input type="password" placeholder="Enter your password" name="password" class="p-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent">
+            </div>
+
+            <!-- Sign In Button -->
+            <div>
+                <button type="submit" class="w-full py-3 px-6 bg-blue-600 text-white font-semibold rounded-md hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                    Sign In
+                </button>
+            </div>
+        </form>
+    </div>
+
+</body>
+</html>
